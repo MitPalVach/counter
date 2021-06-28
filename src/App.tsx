@@ -2,12 +2,13 @@ import React from 'react';
 import Display from "./Component/Display/Display";
 import styles from './App.module.css'
 import Settings from "./Component/Settings/Settings";
+import Button from "./Component/Button/Button";
 
 
 function App() {
     let [counter, setCounter] = React.useState(0)
     let [disable, setDisable] = React.useState(true)
-    let [active, setActive] = React.useState(false)
+    let [activeReset, setActiveReset] = React.useState(false)
     let [maxValue, setMaxValue] = React.useState(5)
     let [minValue, setMinValue] = React.useState(0)
 
@@ -17,15 +18,14 @@ function App() {
             setDisable(false)
         }
         if (counter === 5) {
-            setActive(true)
+            setActiveReset(true)
         }
     }
     let reset = () => {
         setCounter(0)
         setDisable(true)
-        setActive(false)
+        setActiveReset(false)
     }
-
 
     const changeMaxValue = (maxValue: number) => {
         setMaxValue(maxValue)
@@ -33,36 +33,29 @@ function App() {
     const changeMinValue = (minValue: number) => {
         setMinValue(minValue)
     }
-
     const onClickSetHandler = () => {
         setCounter(5)
     }
-
     const onClickHandler = () => inc()
     const onResetHandler = () => reset()
 
     return (
         <div className={styles.App}>
             <div className={styles.element__item}>
-                <div className={styles.counter__display}>
-                    <Settings maxValue={maxValue} minValue={minValue} changeMaxValue={changeMaxValue}
-                              changeMinValue={changeMinValue}/>
-                </div>
-                <div>
-                    <button onClick={onClickSetHandler}>Set</button>
-                </div>
+                <Settings maxValue={maxValue}
+                          minValue={minValue}
+                          changeMaxValue={changeMaxValue}
+                          changeMinValue={changeMinValue}/>
+                <Button onClick={onClickSetHandler} title={'Set'}/>
             </div>
             <div className={styles.element__item}>
-                <div className={styles.counter__display}>
-                    <Display count={counter} active={active}/>
-                </div>
-                <div>
-                    <button onClick={onClickHandler}>Increase</button>
-                    <button disabled={disable} onClick={onResetHandler}>Reset</button>
-                </div>
+                <Display count={counter}
+                         activeReset={activeReset}/>
+                <Button onClick={onClickHandler} title={'Inc'}/>
+                <Button disabled={disable} onClick={onResetHandler} title={'Reset'}/>
             </div>
         </div>
-    );
+    )
 }
 
 export default App;
