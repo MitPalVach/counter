@@ -13,11 +13,11 @@ function App() {
     let [minValue, setMinValue] = React.useState(0)
 
     let inc = () => {
-        if (counter >= 0 && counter < 5) {
+        if (counter >= minValue && counter < maxValue) {
             setCounter(++counter)
             setDisable(false)
         }
-        if (counter === 5) {
+        if (counter === maxValue) {
             setActiveReset(true)
         }
     }
@@ -34,7 +34,7 @@ function App() {
         setMinValue(minValue)
     }
     const onClickSetHandler = () => {
-        setCounter(5)
+        setCounter(minValue)
     }
     const onClickHandler = () => inc()
     const onResetHandler = () => reset()
