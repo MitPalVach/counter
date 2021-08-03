@@ -7,25 +7,12 @@ import Button from "./Component/Button/Button";
 
 function App() {
     let [counter, setCounter] = React.useState(0)
-    let [disable, setDisable] = React.useState(true)
+    let [disableReset, setDisableReset] = React.useState(true)
+    let [disableInc, setDisableInc] = React.useState(false)
+    let [disableSet, setDisableSet] = React.useState(false)
     let [activeReset, setActiveReset] = React.useState(false)
-    let [maxValue, setMaxValue] = React.useState(5)
+    let [maxValue, setMaxValue] = React.useState(3)
     let [minValue, setMinValue] = React.useState(0)
-
-    let inc = () => {
-        if (counter >= minValue && counter < maxValue) {
-            setCounter(++counter)
-            setDisable(false)
-        }
-        if (counter === maxValue) {
-            setActiveReset(true)
-        }
-    }
-    let reset = () => {
-        setCounter(0)
-        setDisable(true)
-        setActiveReset(false)
-    }
 
     const changeMaxValue = (maxValue: number) => {
         setMaxValue(maxValue)
@@ -33,11 +20,36 @@ function App() {
     const changeMinValue = (minValue: number) => {
         setMinValue(minValue)
     }
-    const onClickSetHandler = () => {
+
+    const onSetHandler = () => {
         setCounter(minValue)
     }
-    const onClickHandler = () => inc()
-    const onResetHandler = () => reset()
+    let onIncHandler = () => {
+        if (counter >= minValue && counter < maxValue) {
+            setCounter(++counter)
+            setDisableReset(false)
+        }
+        if (counter === maxValue) {
+            setActiveReset(true)
+            setDisableInc(true)
+        }
+    }
+    let onResetHandler = () => {
+        setCounter(0)
+        setDisableReset(true)
+        setActiveReset(false)
+    }
+
+    if (!disableSet) {
+        if (maxValue === minValue) {
+            setDisableSet(true)
+        } else if (minValue > maxValue) {
+            setDisableSet(true)
+        } else if (minValue < 0 && maxValue < 0) {
+            setDisableSet(true)
+        }
+    }
+
 
     return (
         <div className={styles.App}>
@@ -46,13 +58,15 @@ function App() {
                           minValue={minValue}
                           changeMaxValue={changeMaxValue}
                           changeMinValue={changeMinValue}/>
-                <Button onClick={onClickSetHandler} title={'Set'}/>
+                <Button onClick={onSetHandler} disabled={disableSet} title={'Set'}/>
             </div>
             <div className={styles.element__item}>
-                <Display count={counter}
+                <Display maxValue={maxValue}
+                         minValue={minValue}
+                         count={counter}
                          activeReset={activeReset}/>
-                <Button onClick={onClickHandler} title={'Inc'}/>
-                <Button disabled={disable} onClick={onResetHandler} title={'Reset'}/>
+                <Button onClick={onIncHandler} disabled={disableInc} title={'Inc'}/>
+                <Button disabled={disableReset} onClick={onResetHandler} title={'Reset'}/>
             </div>
         </div>
     )

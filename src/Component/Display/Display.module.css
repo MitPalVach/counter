@@ -3,10 +3,15 @@
     justify-content: center;
     width: 100%;
     padding: 30px 0;
-    font-size: 120px;
+    font-size: 56px;
     color: black;
 }
 
 .active__reset {
     color: red;
+}
+
+.display__value {
+    color: red;
+    font-size: 56px;
 }

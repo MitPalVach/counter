@@ -3,9 +3,9 @@ import styles from './Button.module.css'
 
 
 type PropsType = {
-    onClick: () => void
+    onClick?: () => void
     title: string
-    disabled?: boolean
+    disabled: boolean
 }
 const Button: React.FC<PropsType> = (props) => {
     return (

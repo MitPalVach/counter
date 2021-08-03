@@ -21,11 +21,11 @@ const Settings: React.FC<PropsType> = (props) => {
         <div className={styles.settings__block}>
             <div className={styles.element__item}>
                 <div className={styles.title}>Max value:</div>
-                <Input onChange={onChangeMaxHandler}/>
+                <Input maxValue={props.maxValue} minValue={props.minValue} onChange={onChangeMaxHandler} />
             </div>
             <div className={styles.element__item}>
                 <div className={styles.title}>Min value:</div>
-                <Input onChange={onChangeMinHandler}/>
+                <Input maxValue={props.maxValue} minValue={props.minValue} onChange={onChangeMinHandler} />
             </div>
         </div>
     );
