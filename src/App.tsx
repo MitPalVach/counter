@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Display from "./Component/Display/Display";
 import styles from './App.module.css'
 import Settings from "./Component/Settings/Settings";
@@ -6,10 +6,12 @@ import Button from "./Component/Button/Button";
 
 
 function App() {
-    let [counter, setCounter] = React.useState(0)
-    let [disable, setDisable] = React.useState(true)
-    let [maxValue, setMaxValue] = React.useState(3)
-    let [minValue, setMinValue] = useState(0)
+    const initialMaxState = () => Number(localStorage.getItem('maxValue'))
+    const initialMinState = () => Number(localStorage.getItem('minValue'))
+    let [counter, setCounter] = useState(initialMinState)
+    let [disable, setDisable] = useState(true)
+    let [maxValue, setMaxValue] = useState(initialMaxState)
+    let [minValue, setMinValue] = useState(initialMinState)
     let [starting, setStarting] = useState(false)
 
     const changeMaxValue = (maxValue: number) => {
@@ -30,6 +32,14 @@ function App() {
             setDisable(true)
         }
     }
+
+    useEffect(() => {
+        localStorage.setItem('minValue', JSON.stringify(minValue))
+    }, [minValue])
+    useEffect(() => {
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    }, [maxValue])
+
     const onSetHandler = () => {
         if (minValue === 0) {
             setStarting(true)
@@ -46,7 +56,7 @@ function App() {
         }
     }
     let onResetHandler = () => {
-        setCounter(0)
+        setCounter(minValue)
     }
 
     return (
