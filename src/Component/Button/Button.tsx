@@ -10,9 +10,10 @@ type PropsType = {
 const Button: React.FC<PropsType> = (props) => {
     return (
         <div>
-            <button disabled={props.disabled}
-                    className={styles.btn}
-                    onClick={props.onClick}
+            <button
+                disabled={props.disabled}
+                className={styles.btn}
+                onClick={props.onClick}
             >{props.title}
             </button>
         </div>

@@ -4,13 +4,13 @@ import styles from './Display.module.css'
 
 type PropsType = {
     count: number
-    activeReset: boolean
     maxValue: number
     minValue: number
+    starting: boolean
 }
 const Display: React.FC<PropsType> = (props) => {
     const styleCounter = () => {
-        if (props.activeReset) {
+        if (props.maxValue === props.count) {
             return `${styles.active__reset} ${styles.counter__inner}`
         } else {
             return styles.counter__inner
@@ -31,13 +31,15 @@ const Display: React.FC<PropsType> = (props) => {
         } else if (props.maxValue <= props.minValue) {
             return 'Incorrect value!'
         } else {
-            return `${props.count} `
+            return `${props.count ? props.count : 'Enter values and press set'} `
         }
     }
 
     return (
         <div className={styleCounter()}>
-            <div className={stylerDisplay()}>{displayIncorrect()}</div>
+            {props.starting
+                ? <div className={stylerDisplay()}>{props.count}</div>
+                : <div className={stylerDisplay()}>{displayIncorrect()}</div>}
         </div>
     )
 }
